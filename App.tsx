@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { registerForPushNotificationsAsync, setupNotificationHandler } from './src/notifications/NotificationHandler';
+import * as Notifications from 'expo-notifications';
+import AppNavigator from './src/navigation/AppNavigator';
+import { AuthProvider } from './src/context/AuthContext';
 
-export default function App() {
+const App = () => {
+  const [expoPushToken, setExpoPushToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    setupNotificationHandler();
+
+    const fetchPushToken = async () => {
+      const token = await registerForPushNotificationsAsync();
+      setExpoPushToken(token);
+    };
+
+    fetchPushToken();
+
+    // Lắng nghe sự kiện khi người dùng nhấn vào thông báo
+    const notificationListener = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      notificationListener.remove();
+    };
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthProvider>
+      <AppNavigator />
+    </AuthProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
