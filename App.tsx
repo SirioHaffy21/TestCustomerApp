@@ -3,29 +3,17 @@ import { registerForPushNotificationsAsync, setupNotificationHandler } from './s
 import * as Notifications from 'expo-notifications';
 import AppNavigator from './src/navigation/AppNavigator';
 import { AuthProvider } from './src/context/AuthContext';
+import { usePushNotifications } from './src/notifications/usePushNotifications';
+import { View, Text } from 'react-native';
 
 const App = () => {
-  const [expoPushToken, setExpoPushToken] = useState<string | null>(null);
+  // const [expoPushToken, setExpoPushToken] = useState<string | null>(null);
 
-  useEffect(() => {
-    setupNotificationHandler();
-
-    const fetchPushToken = async () => {
-      const token = await registerForPushNotificationsAsync();
-      setExpoPushToken(token);
-    };
-
-    fetchPushToken();
-
-    // Lắng nghe sự kiện khi người dùng nhấn vào thông báo
-    const notificationListener = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
-
-    return () => {
-      notificationListener.remove();
-    };
-  }, []);
+  // useEffect(() => {
+  //   registerForPushNotificationsAsync();
+  // }, []);
+  const {expoPushToken, notification} = usePushNotifications();
+  const data = JSON.stringify(notification, undefined, 2);
 
   return (
     <AuthProvider>

@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation }: any) => {
       <Text style={styles.title}>Đăng Nhập</Text>
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder="Tài khoản"
         value={username}
         onChangeText={setUsername}
       />

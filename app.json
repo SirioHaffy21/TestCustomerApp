@@ -19,10 +19,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.nha347744.TestCustomerApp",
+      "googleServicesFile":"./android/app/google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fcb2cc41-e666-4752-8cd6-49b0fdcd5e54"
+      }
     }
   }
 }

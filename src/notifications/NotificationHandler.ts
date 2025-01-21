@@ -1,6 +1,7 @@
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
+//import * as Permissions from 'expo-permissions';
 
 // Đăng ký quyền thông báo và lấy token
 export const registerForPushNotificationsAsync = async (): Promise<string | null> => {
@@ -23,6 +24,7 @@ export const registerForPushNotificationsAsync = async (): Promise<string | null
   }
 
   const token = (await Notifications.getExpoPushTokenAsync()).data;
+  Alert.alert(token);
   console.log('Expo Push Token:', token);
   return token;
 };

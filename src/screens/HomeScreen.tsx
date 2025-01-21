@@ -4,7 +4,10 @@ import API from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+//import { HandleNotification } from "../utils/handleNotification";
+import * as Notifications from 'expo-notifications';
+//import * as Permissions from 'expo-permissions';
+import { registerForPushNotificationsAsync } from "../notifications/NotificationHandler";
 interface Customer {
   CUSTOMER_ID: number;
   CUSTOMER_NAME: string;
@@ -28,8 +31,13 @@ const HomeScreen = ({ navigation }: any) => {
     }
   };
 
+  // useEffect(() => {
+  //   HandleNotification.checkNotificationPermission();
+  // }, []);
+
   useEffect(() => {
     fetchCustomers();
+    registerForPushNotificationsAsync();
   }, []);
 
   return (
